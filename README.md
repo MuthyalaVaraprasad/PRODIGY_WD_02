@@ -4,7 +4,7 @@ ChronoSync is an ultra-modern, highly interactive, and responsive web applicatio
 
 Built entirely using vanilla web technologies (HTML5, CSS3, and ES6+ JavaScript), it offers a premium glassmorphic visual aesthetic, five customizable color themes, keyboard hotkeys, and synthesised sound effects generated programmatically via the Web Audio API.
 
-### 🌐 Live Demo: [https://stopwatchweb-ochre.vercel.app](https://stopwatchweb-ochre.vercel.app/)
+### 🌐 Live Demo: https://stopwatchweb-ochre.vercel.app/
 
 ---
 
