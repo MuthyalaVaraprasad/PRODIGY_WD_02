@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoSync | Advanced Stopwatch & Time Analytics Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark-glass">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="logo-icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="logo-text">ChronoSync</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="stopwatch" id="nav-stopwatch">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 10"/></svg>
+                    <span>Stopwatch</span>
+                </button>
+                <button class="nav-item" data-tab="timer" id="nav-timer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 16"/></svg>
+                    <span>Countdown</span>
+                </button>
+                <button class="nav-item" data-tab="clock" id="nav-clock">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg>
+                    <span>Clock & Alarm</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="setting-item">
+                    <span class="setting-label">Sound FX</span>
+                    <button class="icon-btn toggle-sound" id="btn-sound" aria-label="Toggle Sound">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sound-on-icon"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sound-off-icon hidden"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                    </button>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Second Ticks</span>
+                    <button class="icon-btn toggle-tick" id="btn-tick" aria-label="Toggle Metronome Tick">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tick-on-icon"><path d="M12 2L2 22h20L12 2z"/><circle cx="12" cy="18" r="2"/><line x1="12" y1="18" x2="12" y2="8"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tick-off-icon hidden"><path d="M12 2L2 22h20L12 2z"/><circle cx="12" cy="18" r="2"/><line x1="12" y1="18" x2="12" y2="8"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                    </button>
+                </div>
+                
+                <div class="theme-select-container">
+                    <span class="setting-label">Theme</span>
+                    <select id="theme-selector" class="theme-dropdown">
+                        <option value="theme-dark-glass">Glassmorphism (Dark)</option>
+                        <option value="theme-light-glass">Glassmorphism (Light)</option>
+                        <option value="theme-cyberpunk">Cyberpunk</option>
+                        <option value="theme-emerald">Forest Emerald</option>
+                        <option value="theme-ocean">Deep Ocean</option>
+                    </select>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="header">
+                <h1 id="page-title">Stopwatch</h1>
+                <div class="header-right">
+                    <div class="shortcut-badge">
+                        <span>Press <kbd>Space</kbd> to Start/Pause</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- Left Panel: Core Tools -->
+                <section class="panel-left card">
+                    
+                    <!-- STOPWATCH VIEW -->
+                    <div class="tab-content active" id="stopwatch-view">
+                        <div class="display-container">
+                            <div class="dial-container">
+                                <!-- Circular progress indicator using SVG -->
+                                <svg class="progress-ring" width="280" height="280">
+                                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="4" fill="transparent" r="130" cx="140" cy="140"/>
+                                    <circle class="progress-ring__circle" id="stopwatch-ring" stroke="var(--accent-color)" stroke-width="6" fill="transparent" r="130" cx="140" cy="140" stroke-dasharray="816.8" stroke-dashoffset="816.8"/>
+                                </svg>
+                                <div class="digital-time font-mono" id="stopwatch-display">
+                                    <span class="time-main">00:00:00</span><span class="time-ms">.000</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-actions">
+                            <button class="btn btn-secondary" id="btn-lap" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                                <span>Lap</span>
+                            </button>
+                            <button class="btn btn-primary btn-pulse" id="btn-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="play-icon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pause-icon hidden"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                                <span id="start-btn-text">Start</span>
+                            </button>
+                            <button class="btn btn-secondary" id="btn-reset" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                                <span>Reset</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- COUNTDOWN TIMER VIEW -->
+                    <div class="tab-content" id="timer-view">
+                        <div class="display-container">
+                            <div class="dial-container">
+                                <svg class="progress-ring" width="280" height="280">
+                                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="4" fill="transparent" r="130" cx="140" cy="140"/>
+                                    <circle class="progress-ring__circle" id="timer-ring" stroke="var(--accent-color)" stroke-width="6" fill="transparent" r="130" cx="140" cy="140" stroke-dasharray="816.8" stroke-dashoffset="0"/>
+                                </svg>
+                                <!-- Interactive Picker Setup -->
+                                <div class="timer-picker" id="timer-picker-ui">
+                                    <div class="picker-group">
+                                        <input type="number" id="timer-hours" min="0" max="99" value="00" placeholder="00" class="font-mono">
+                                        <span class="picker-label">H</span>
+                                    </div>
+                                    <span class="picker-colon">:</span>
+                                    <div class="picker-group">
+                                        <input type="number" id="timer-minutes" min="0" max="59" value="05" placeholder="00" class="font-mono">
+                                        <span class="picker-label">M</span>
+                                    </div>
+                                    <span class="picker-colon">:</span>
+                                    <div class="picker-group">
+                                        <input type="number" id="timer-seconds" min="0" max="59" value="00" placeholder="00" class="font-mono">
+                                        <span class="picker-label">S</span>
+                                    </div>
+                                </div>
+                                <!-- Active Countdown Display -->
+                                <div class="digital-time font-mono hidden" id="timer-display">
+                                    <span class="time-main">00:05:00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Presets -->
+                        <div class="timer-presets">
+                            <button class="preset-btn" data-time="60">1 Min</button>
+                            <button class="preset-btn" data-time="300">5 Min</button>
+                            <button class="preset-btn" data-time="600">10 Min</button>
+                            <button class="preset-btn" data-time="1500">25 Min (Pomodoro)</button>
+                        </div>
+
+                        <div class="control-actions">
+                            <button class="btn btn-secondary" id="btn-timer-cancel" disabled>
+                                <span>Cancel</span>
+                            </button>
+                            <button class="btn btn-primary" id="btn-timer-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="play-icon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pause-icon hidden"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                                <span id="timer-start-btn-text">Start</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CLOCK & ALARM VIEW -->
+                    <div class="tab-content" id="clock-view">
+                        <div class="display-container">
+                            <div class="clock-display-card">
+                                <div class="digital-clock font-mono" id="clock-time">00:00:00 PM</div>
+                                <div class="digital-date" id="clock-date">Sunday, July 5, 2026</div>
+                            </div>
+                        </div>
+
+                        <!-- Alarm Setup Area -->
+                        <div class="alarm-manager">
+                            <h3>Alarms</h3>
+                            <form id="alarm-form" class="alarm-form">
+                                <input type="time" id="alarm-time" required class="font-mono">
+                                <input type="text" id="alarm-label" placeholder="Alarm Label (e.g. Wake up!)">
+                                <button type="submit" class="btn btn-primary btn-sm">Add Alarm</button>
+                            </form>
+                            
+                            <div class="alarm-list-container">
+                                <ul class="alarm-list" id="alarm-list">
+                                    <!-- Dynamic Alarm Items -->
+                                    <li class="no-alarms">No active alarms set.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- Right Panel: Analytics & Lap History -->
+                <section class="panel-right card">
+                    <div class="panel-header">
+                        <h2>Analytics Dashboard</h2>
+                        <div class="panel-header-actions" id="analytics-actions">
+                            <button class="btn-icon-label" id="btn-export" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                <span>Export CSV</span>
+                            </button>
+                            <button class="btn-icon-label" id="btn-clear-laps" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                <span>Clear Laps</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <span class="metric-title">Average Lap</span>
+                            <span class="metric-value font-mono" id="metric-avg">--:--.--</span>
+                        </div>
+                        <div class="metric-card highlight-fastest">
+                            <span class="metric-title">Fastest Lap</span>
+                            <span class="metric-value font-mono" id="metric-fastest">--:--.--</span>
+                        </div>
+                        <div class="metric-card highlight-slowest">
+                            <span class="metric-title">Slowest Lap</span>
+                            <span class="metric-value font-mono" id="metric-slowest">--:--.--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-title">Total Laps</span>
+                            <span class="metric-value font-mono" id="metric-total">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Graphic Lap Chart -->
+                    <div class="chart-container">
+                        <h3>Lap Time Trend (s)</h3>
+                        <div class="chart-wrapper">
+                            <svg class="analytics-chart" id="analytics-chart" viewBox="0 0 450 150">
+                                <!-- Dynamic path, grid lines, and dots will render here -->
+                                <text x="225" y="75" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="12">Start stopwatch and record laps to view chart</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Lap Scroll Area -->
+                    <div class="lap-history-section">
+                        <h3>Lap Split Times</h3>
+                        <div class="lap-table-wrapper">
+                            <table class="lap-table">
+                                <thead>
+                                    <tr>
+                                        <th>Lap</th>
+                                        <th>Split Time</th>
+                                        <th>Overall Time</th>
+                                        <th>Delta</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lap-table-body">
+                                    <tr>
+                                        <td colspan="4" class="no-data-msg">No splits recorded yet.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Active Alarm Notification Dialog / Banner -->
+    <div class="alarm-alert hidden" id="alarm-alert">
+        <div class="alarm-alert-content card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--alert-color)" stroke-width="2" class="pulse-icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <h2>Timer Finished!</h2>
+            <p id="alarm-alert-text">Your timer has reached zero.</p>
+            <button class="btn btn-primary" id="btn-alarm-dismiss">Dismiss</button>
+        </div>
+    </div>
+
+    <!-- Script Entrypoint -->
+    <script src="app.js"></script>
+</body>
+</html>
